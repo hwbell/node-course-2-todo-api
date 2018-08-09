@@ -38,7 +38,7 @@ app.get('/todos/:id', (req, res) => {
   
   // validate id
   if (!ObjectId.isValid(id)) {
-    return res.status(404).send("Invalid object ID");
+    return res.status(404).send();
   }
 
   // findById
