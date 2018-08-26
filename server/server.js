@@ -35,20 +35,13 @@ app.get('/todos', (req, res) => {
 
 // GET /todos/1234324
 app.get('/todos/:id', (req, res) => {
+  
   var id = req.params.id;
   
-  // validate id
   if (!ObjectId.isValid(id)) {
     return res.status(404).send();
   }
 
-  // findById
-    // success
-      // if todo - send it back
-      // if no todo - send back 404 with emtpy body
-    // error
-      // 400 - and send empty body back
-  
     Todo.findById(id).then((todo) => {
       if (todo) {
         res.send({"todo": todo});
@@ -59,8 +52,32 @@ app.get('/todos/:id', (req, res) => {
 
 });
 
+app.delete('/todos/:id', (req, res) => {
+  //get the id
+  var id = req.params.id;
+  
+  // validate id
+  if (!ObjectId.isValid(id)) {
+    return res.status(404).send('id not valid');
+  }
+
+  //remove todo by id
+  Todo.findByIdAndRemove(id).then((todo) => {
+    
+    if (!todo) {
+      res.status(404).send('todo not found');
+    } 
+    else {
+      res.status(200).send(todo);
+    }
+  }).catch((e) => {
+    res.status(400).send();
+  })
+  
+})
+
 app.listen(port, () => {
-  console.log(`Startes up at port ${port}`);
+  console.log(`Started up at port ${port}`);
 })
 
 module.exports = {app};
