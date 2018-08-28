@@ -1,3 +1,5 @@
+require('/config/config')
+
 const _ = require('lodash');
 var express = require('express');
 var bodyParser = require('body-parser');
@@ -8,7 +10,7 @@ var Todo = require('./models/todo.js').Todo;
 var User = require('./models/user.js').User;
 
 var app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT;
 
 app.use(bodyParser.json());
 
@@ -80,7 +82,7 @@ app.patch('/todos/:id', (req, res) => {
   // get id
   var id = req.params.id;
 
-  // get properties to update
+  // get only properties to update
   var body = _.pick(req.body, ['text', 'completed']);
 
   if (!ObjectId.isValid(id)) {

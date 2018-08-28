@@ -176,7 +176,7 @@ describe('PATCH /todos/:id', () => {
 
   it('should clear completedAt when todo is not completed', (done) => {
     
-    // updte text, set completed false, 
+    // update text, set completed false, 
     // 200
     // text is changed, completed false, completedAt is null
 
